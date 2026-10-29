@@ -1,0 +1,9 @@
+[
+  {
+    "Id": 2,
+    "Nombre": "Cazar pollos",
+    "Dificultad": "F\u00E1cil",
+    "RecompensaXP": 12,
+    "Completada": false
+  }
+]
