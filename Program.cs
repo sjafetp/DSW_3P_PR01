@@ -5,7 +5,6 @@ using DSW_3P_PR01.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 
-
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddOpenApi();
 
@@ -13,12 +12,21 @@ builder.Services.AddOpenApi();
 builder.Services.AddControllers();
 
 //Agregar dependencias
-builder.Services.AddScoped<IMisionRepository, MisionSQLRepository>();
+// builder.Services.AddScoped<IMisionRepository, MisionSQLRepository>();
+builder.Services.AddScoped<IMisionRepository, MisionPostgreSqlRepository>();
 builder.Services.AddScoped<IMisionService, MisionService>();
+
 //Configuración del SQL SERVER
-builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlServer(
-        builder.Configuration.GetConnectionString("SqlServerConnection")
+// builder.Services.AddDbContext<AppDbContext>(options =>
+//     options.UseSqlServer(
+//         builder.Configuration.GetConnectionString("SqlServerConnection")
+//     )
+// );
+
+//Configuración de PostgreSQL
+builder.Services.AddDbContext<PostgreSqlDbContext>(options =>
+    options.UseNpgsql(
+        builder.Configuration.GetConnectionString("PostgreSqlConnection")
     )
 );
 
@@ -91,3 +99,5 @@ app.Run();
 //dotnet tool install --global dotnet-ef --version 10.0.*
 
 //dotnet add package Microsoft.AspNetCore.Authentication.JwtBearer --version "10.0.*"
+
+//dotnet add package Npgsql.EntityFrameworkCore.PostgreSQL --version 10.0.*
